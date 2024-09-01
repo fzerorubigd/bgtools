@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i|Nunito:300,300i" rel="stylesheet">
+        <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+        <style type="text/css">
+          *,
+          *::after,
+          *::before {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit; 
+          }
+
+          html {
+            box-sizing: border-box;
+            font-size: 62.5%; 
+          }
+
+          body {
+            font-family: "Nunito", sans-serif;
+            color: #333;
+            font-weight: 300;
+            line-height: 1.6; 
+          }
+
+          .container {
+            width: 800px;
+            height: 800px;
+            margin: 2rem auto; 
+          }
+
+          .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 12rem);
+            grid-template-rows: repeat(4, 12rem);
+            grid-gap: 1px; 
+            width: fit-content;
+            block-size: fit-content;
+            margin: 1rem;
+            padding: 1rem;
+          }
+
+          .gallery__img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block; 
+          }
+
+          .g-row-1 {
+            grid-row-start: 1;
+            grid-row-end: 2;
+          }
+
+          .g-col-1 {
+            grid-column-start: 1;
+            grid-column-end: 2;
+          }
+
+          .g-row-2 {
+            grid-row-start: 2;
+            grid-row-end: 3;
+          }
+
+          .g-col-2 {
+            grid-column-start: 2;
+            grid-column-end: 3;
+          }
+
+          .g-row-3 {
+            grid-row-start: 3;
+            grid-row-end: 4;
+          }
+
+          .g-col-3 {
+            grid-column-start: 3;
+            grid-column-end: 4;
+          }
+
+          .g-row-4 {
+            grid-row-start: 4;
+            grid-row-end: 5;
+          }
+
+          .g-col-4 {
+            grid-column-start: 4;
+            grid-column-end: 5;
+          }
+
+          .g-row-5 {
+            grid-row-start: 5;
+            grid-row-end: 6;
+          }
+
+          .g-col-5 {
+            grid-column-start: 5;
+            grid-column-end: 6;
+          }
+        </style>
+
+        <title>Last played games</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="gallery">
+              {{ range $single := . }}
+                <figure class="gallery__item g-row-{{ $single.Row }} g-col-{{ $single.Col }}">
+                   <img src="{{ $single.URL }}" alt="{{ $single.Alt }}" class="gallery__img">
+                </figure>
+              {{ end }}
+            </div>
+        </div>
+    </body>
+</html>
