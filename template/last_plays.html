@@ -101,6 +101,19 @@
             grid-column-start: 5;
             grid-column-end: 6;
           }
+
+          .bga-overlay {
+            width:15px;
+            height: 15px;
+            position: relative;
+            top:-2rem;
+            left: 9.3rem;
+            display: block;
+            border-radius: 50px;
+            background-color: white;
+            z-index: 10;
+          }
+
         </style>
 
         <title>Last played games</title>
@@ -110,7 +123,10 @@
             <div class="gallery">
               {{ range $single := . }}
                 <figure class="gallery__item g-row-{{ $single.Row }} g-col-{{ $single.Col }}">
-                   <img src="{{ $single.URL }}" alt="{{ $single.Alt }}" class="gallery__img">
+                  <img src="{{ $single.URL }}" alt="{{ $single.Alt }}" class="gallery__img">
+                  {{ if $single.BGA }}
+                  <img class="bga-overlay" src="data:image/webp;base64,UklGRuQDAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEYCAAARkHDbtqm36ve4GS8vtm3btu3Uts3Y9vfFtmrbtm3bdt/7yoiYAPyfKb4/wqc5ICNnYZDYLxA2QvsXr9t5+tLORE3Cg6DusGkDbBRkZU1sDActX1Uzd0xa98V6BTbpiWv279rVkTzAZe7ChM6lC5QAwfAbd2JYpBMO7Zwbtbhmc0+ghcageo4LACi0nZ1HmKLXHRhPAV7LS1UA2QUc/Z+Eck7NYqJLd3E0AAilJAOg3YaKAaD8du2zA6Ng0/55FADi5QUAomIEEJnXunO6IBN/+j6OIggoMYmfGM1bWzhGYDVpXMcd7SoHnoXmLedqsvEPbGtLcKV5Exy5vkaJDd6cAkcR8KzpV7J/nTlhC6pLUSA8SYyu6T59I1+WLboxXQM8K0QtSGi7fnSKNMUUwS22543QghL6OSd2ZUkxSEyr4njxICcERjnuxSMDaABCMfWl0/TYRGO0meC6/+4qXQI412Q5EoBmMq2PYVFY8eLmABrSWUuiAUhF2Uj9NGlTPj+TXOfz5wtFodm6wgtAzLqNueZiItql+1bqMWkfefs2WQoqLXsGEKgWrtt3ZHtVMnfNzqMJsj9JLXz79fUsCnTa1e0zZpTWZ3RevHHz+s2r568frXJTULErvP/2w6lAACYb7146sDJj0ID0JXuOHNl/4OLdR6eWrz/18sPXJ1UqACjr/MacgYpCtIiKqbOzuVVM05W37z98+fTl+RoXMPJRFJgJAaEUZh19/vbr2yvl5oTp12n7IWk5i0PU8Pv5CEXz0+QP/NVWUDggeAEAAJAKAJ0BKiAAIAA+MQqMRiIREQwAIAMEtjDwIwsQ/A3lf4NcgZq53myQOo7/YPYB+K/8z6gG4A/Xn/Af2b3wPRL5FfWAegB5Wv61/BL+1gI7j1/46eIlfOw6XziiAAD+8KMe+8HPZLfgV/3lp04DNn+yKU3kjuiA2GdK74vXxuF594eoK/SA8BuQrnyWWu0ZELrzVTNvKCvBBFR+fJAz2LU5buV/KCEA26lTqqmhA5K8kGJMe69JR/8/8LiizlJDgqnz9Ugh1zBYbNq8TdztS4CLSWhVIoMXXa4H2Hj0OKIFNg395kH6YhKg9J7wN6wePDG4teA1PuAZhHNqiFtrxM9bU4UG60f9J0CYYc65jAE70kFVtvaJrpMU4WPkKLTPXZQkerDl3/F8o+jJIx4UypDctQ5dIAsGNsH62bMnEk2MLwfLgpuR13laKO3LquYouny7Ble5+t1LZNF+lZ7NIVwmHO3OZIZe+hFMBQqcDYKkDoD3uLfSAAA=">
+                  {{ end }}
                 </figure>
               {{ end }}
             </div>

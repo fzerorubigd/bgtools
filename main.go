@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"flag"
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"os"
@@ -28,6 +29,7 @@ type Single struct {
 	Alt   string
 	URL   string
 	Count int
+	BGA   bool
 }
 
 func main() {
@@ -40,10 +42,12 @@ func main() {
 	var (
 		username string
 		outfile  string
+		webOnly  bool
 	)
 
 	flag.StringVar(&username, "username", "fzerorubigd", "The BGG username")
 	flag.StringVar(&outfile, "out", "out.png", "The file to save the result")
+	flag.BoolVar(&webOnly, "w", false, "run the web server and not generate the file")
 	flag.Parse()
 
 	rl := ratelimit.New(10, ratelimit.Per(60*time.Second)) // creates a 10 per minutes rate limiter.
@@ -74,6 +78,7 @@ bigLoop:
 				cc[i].Col = col
 				cc[i].ID = play.Item.ID
 				cc[i].Alt = play.Item.Name
+				cc[i].BGA = play.Location == "BGA"
 				continue bigLoop
 			}
 		}
@@ -104,7 +109,9 @@ bigLoop:
 
 	http.HandleFunc("/", func(w http.ResponseWriter, _ *http.Request) {
 
-		tpl.Execute(w, cc)
+		if err := tpl.Execute(w, cc); err != nil {
+			log.Print(err)
+		}
 	})
 
 	listener, err := net.Listen("tcp", ":0")
@@ -113,10 +120,16 @@ bigLoop:
 	}
 
 	addr := listener.Addr().(*net.TCPAddr).Port
-	fmt.Print(addr)
 	go func() {
 		http.Serve(listener, nil)
 	}()
+
+	if webOnly {
+		log.Printf("the web server is running at http://127.0.0.1:%d", addr)
+		<-ctx.Done()
+		listener.Close()
+		return
+	}
 
 	var buf []byte
 	chromCtx, cancel := chromedp.NewContext(ctx)
