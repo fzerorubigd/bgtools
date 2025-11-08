@@ -51,7 +51,13 @@ func main() {
 	flag.Parse()
 
 	rl := ratelimit.New(10, ratelimit.Per(60*time.Second)) // creates a 10 per minutes rate limiter.
-	bgg := gobgg.NewBGGClient(gobgg.SetLimiter(rl))
+	opts := []gobgg.OptionSetter{
+		gobgg.SetLimiter(rl),
+	}
+	if token := os.Getenv("BGG_TOKEN"); token != "" {
+		opts = append(opts, gobgg.SetAuthToken(token))
+	}
+	bgg := gobgg.NewBGGClient(opts...)
 	plays, err := bgg.Plays(ctx, gobgg.SetUserName(username), gobgg.SetPageNumber(1))
 	if err != nil {
 		panic(err)
@@ -135,9 +141,9 @@ bigLoop:
 	chromCtx, cancel := chromedp.NewContext(ctx)
 	defer cancel()
 	err = chromedp.Run(chromCtx,
-		chromedp.EmulateViewport(1024, 768),
+		chromedp.EmulateViewport(800, 590),
 		chromedp.Navigate(fmt.Sprintf("http://127.0.0.1:%d", addr)),
-		chromedp.Screenshot("div.gallery", &buf, chromedp.NodeReady),
+		chromedp.Screenshot("div.container", &buf, chromedp.NodeReady),
 	)
 
 	if err != nil {

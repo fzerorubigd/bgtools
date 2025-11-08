@@ -1,10 +1,10 @@
 module github.com/fzerorubigd/bg-tools
 
-go 1.23.0
+go 1.24.0
 
 require (
 	github.com/chromedp/chromedp v0.10.0
-	github.com/fzerorubigd/gobgg v0.10.2
+	github.com/fzerorubigd/gobgg v0.12.1
 	go.uber.org/ratelimit v0.3.1
 )
 
@@ -17,6 +17,6 @@ require (
 	github.com/gobwas/ws v1.4.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	golang.org/x/net v0.28.0 // indirect
-	golang.org/x/sys v0.24.0 // indirect
+	golang.org/x/net v0.46.0 // indirect
+	golang.org/x/sys v0.37.0 // indirect
 )
